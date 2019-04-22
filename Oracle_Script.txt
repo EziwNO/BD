@@ -1,0 +1,64 @@
+    create table Assembly (
+        ID number not null,
+        Power_plant_id number not null,
+        Installation_time number(8,2) not null,
+        Installation_cost number(8,2) not null,
+        Required_space number(8,2) not null,
+        primary key (ID)
+    );
+
+    create table Power_plants (
+        ID number not null,
+        Name varchar2(50 char) not null,
+        Power number(8,2) not null,
+        Efficiency number(8,2) not null,
+	Lifetime number(8,2) not null,
+        primary key (ID)
+    );
+
+    create table Turboblocks (
+        ID number not null,
+        Power_plant_ID number not null,
+        Name varchar2(50 char) not null,
+        Fuel_type varchar2(50 char) not null,
+        Fuel_consumption number(8,2) not null,
+        Power number(8,2) not null,
+        Efficiency number(8,2) not null,
+        primary key (ID)
+    );
+
+    create table Generators (
+        ID number not null,
+        Power_plant_ID number not null,
+        Name varchar2(50 char) not null,
+        Type varchar2(50 char) not null,
+        primary key (ID)
+    );
+
+    create table Control_units (
+        ID number not null,
+	Power_plant_ID number not null,
+        Name varchar2(50 char) not null,
+	Voltage number(8,2) not null,
+        primary key (ID)
+    );
+
+    alter table Assembly 
+        add constraint Assembly_Power_plants_FK
+        foreign key (Power_plant_ID) 
+        references Assembly;
+
+    alter table Turboblocks 
+        add constraint Turboblocks_Power_plants_FK
+        foreign key (Power_plant_ID) 
+        references Turboblocks;
+
+    alter table Generators 
+        add constraint Generators_Power_plants_FK
+        foreign key (Power_plant_ID) 
+        references Generators;
+
+    alter table Control_units 
+        add constraint Control_units_Power_plants_FK
+        foreign key (Power_plant_ID) 
+        references Control_units;
